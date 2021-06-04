@@ -17,14 +17,31 @@ class ViewController: UIViewController {
     
     var phoneNumberString = ""{
         didSet{
-            self.phoneNumberLabel.text = phoneNumberString
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.phoneNumberLabel.text = self.phoneNumberString
+            }
+            
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        for btnItem in phoneNumberBtns {
+            btnItem.addTarget(self, action: #selector(onNumberBtnClicked(sender:)), for: .touchUpInside)
+        }
+        
+        phoneCallBtn.addTarget(self, action: #selector(onPhoneCallBtnClicked(_:)), for: .touchUpInside)
     }
 
+    @objc fileprivate func onNumberBtnClicked(sender: UIButton){
+        guard let inputString = sender.titleLabel?.text else { return }
+        phoneNumberString.append(inputString)
+    }
 
+    @objc fileprivate func onPhoneCallBtnClicked(_ sender: UIButton) {
+        phoneNumberString.removeAll()
+    }
 }
 
