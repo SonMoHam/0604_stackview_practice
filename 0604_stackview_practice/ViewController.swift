@@ -9,6 +9,17 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var phoneNumberLabel: UILabel!
+    
+    @IBOutlet var phoneNumberBtns: [CircleButton]!
+    
+    @IBOutlet weak var phoneCallBtn: CircleButton!
+    
+    var phoneNumberString = ""{
+        didSet{
+            self.phoneNumberLabel.text = phoneNumberString
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
